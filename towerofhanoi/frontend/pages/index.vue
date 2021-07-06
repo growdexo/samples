@@ -8,26 +8,37 @@
             </p>
         </b-field>
     </div>
-    <div class="columns" v-if="states && states.length > 0">
+    <div class="columns mt-4" v-if="states && states.length">
       <b-button type="is-primary is-light" :disabled="this.statePointer == 0" @click="prevState">Prev</b-button>
       <b-button type="is-primary is-light" :disabled="this.statePointer == this.states.length - 1" @click="nextState">Next</b-button>
     </div>
-
-    <div class="columns" v-if="states && states.length > 0">
-      <div class="rod">
-        <div v-for="disk in firstTower" :key="disk.diskId" :style="disk.style" class="disk">
-            {{disk.diskId}}
+    <div class="columns rods" v-if="states && states.length">
+      <div class="column">
+        <div class="columns">
+          <div class="rod">
+            <div v-for="disk in firstTower" :key="disk.diskId" :style="disk.style" class="disk">
+                {{disk.diskId}}
+            </div>
+          </div>
+          <div class="rod">
+            <div v-for="disk in secondTower" :key="disk.diskId" :style="disk.style" class="disk">
+                {{disk.diskId}}
+            </div>
+          </div>
+          <div class="rod">
+            <div v-for="disk in thirdTower" :key="disk.diskId" :style="disk.style" class="disk">
+                {{disk.diskId}}
+            </div>
+          </div>
         </div>
       </div>
-      <div class="rod">
-        <div v-for="disk in secondTower" :key="disk.diskId" :style="disk.style" class="disk">
-            {{disk.diskId}}
-        </div>
-      </div>
-      <div class="rod">
-        <div v-for="disk in thirdTower" :key="disk.diskId" :style="disk.style" class="disk">
-            {{disk.diskId}}
-        </div>
+      <div class="column instructions">
+        <h1 class="h1 is-size-3"> Instructions</h1>
+        <ul>
+          <li v-for="n in statePointer">
+            {{states[n].instruction}}
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -75,7 +86,7 @@ export default {
   computed: {
     firstTower() {
       const state = this.states[this.statePointer].stacks[0]
-      console.log(buildTower(this.n, state))
+      buildTower(this.n, state)
       
       return buildTower(this.n, state)
     },
@@ -97,21 +108,25 @@ export default {
         return;
       }
       this.statePointer = 0;
-      const getStatesResult = await this.$axios.$get('http://localhost:8080/towerofhanoi?n=' + this.numDisks)
+      const getStatesResult = await this.$axios.get('/towerofhanoi?n=' + this.numDisks)
       this.n = this.numDisks
-      this.states = getStatesResult.data
+      this.states = getStatesResult.data.data
     },
 
     nextState() {
       if (this.statePointer < this.states.length - 1) {
         this.statePointer ++
       }
+      const container = this.$el.querySelector(".instructions");
+      container.scrollTop = container.scrollHeight;
     },
 
     prevState() {
       if (this.statePointer > 0) {
         this.statePointer --;
       }
+      const container = this.$el.querySelector(".instructions");
+      container.scrollTop = container.scrollHeight;
     }
   },
 
@@ -133,6 +148,16 @@ export default {
     background-color: brown;
     margin-top: 30px;
     margin-left: 250px;
+  }
+
+  .rods {
+    margin-left: -200px;
+  }
+
+  .instructions {
+    padding-left: 150px;
+    height:300px;
+    overflow: auto;
   }
 
   .disk {

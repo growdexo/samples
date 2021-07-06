@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @SpringBootApplication
 @RestController
@@ -42,4 +43,10 @@ public class TowerofhanoiApplication {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+          .addResourceHandler("/resources/**")
+          .addResourceLocations("/resources/");	
+    }
 }

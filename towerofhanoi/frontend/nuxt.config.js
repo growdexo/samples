@@ -7,7 +7,7 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'frontend',
+    title: 'Tower of Hanoi',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,11 +19,15 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-  ],
+  css: ["@/assets/scss/main.scss"],
+
+  buefy: {
+    css: false
+  },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '~/plugins/axios-host'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -44,7 +48,13 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL
+    }
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
