@@ -5,7 +5,7 @@ export default function(vue: any) {
       const port = window.location.port
       const url = `${protocol}//${hostname}:${port}`
       console.log("setting base url " + url);
-      // vue.$axios.defaults.baseURL = url
-      vue.$axios.defaults.baseURL = "http://localhost:8080"
+      vue.$axios.defaults.baseURL = url
+      // vue.$axios.defaults.baseURL = "http://localhost:8080"
     // }
   }
