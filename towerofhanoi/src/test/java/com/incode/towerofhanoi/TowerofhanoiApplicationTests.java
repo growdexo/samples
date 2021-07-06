@@ -1,7 +1,9 @@
 package com.incode.towerofhanoi;
 
 import org.junit.jupiter.api.Test;
-import com.incode.towerofhanoi.*;.
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.incode.towerofhanoi.*;
 
 @SpringBootTest
 class TowerofhanoiApplicationTests {

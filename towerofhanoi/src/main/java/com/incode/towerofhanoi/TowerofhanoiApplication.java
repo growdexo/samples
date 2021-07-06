@@ -1,6 +1,7 @@
 package com.incode.towerofhanoi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.springframework.boot.SpringApplication;
@@ -17,7 +18,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 public class TowerofhanoiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TowerofhanoiApplication.class, args);
+		SpringApplication app = new SpringApplication(TowerofhanoiApplication.class);
+        app.setDefaultProperties(Collections
+          .singletonMap("server.port", System.getenv().get("PORT")));
+        app.run(args);
 	}
 	
 //	@GetMapping("/hello")
